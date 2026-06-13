@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DASAD | Financial Information Consulting</title>
+    <style>
+        /* Global Variables & Base Styles */
+        :root {
+            --primary: #EF4444;
+            --primary-light: #F87171;
+            --accent-blue: #3B82F6;
+            --bg-white: #FFFFFF;
+            --text-title: #111827;
+            --text-body: #6B7280;
+            --nav-hover: #FEE2E2;
+            --page-normal: #F3F4F6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-white);
+            color: var(--text-body);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--text-title);
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+        }
+
+        .btn-accent {
+            background-color: var(--accent-blue);
+            color: #fff;
+        }
+
+        .btn-accent:hover {
+            opacity: 0.9;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--bg-white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .main-nav ul {
+            display: flex;
+            gap: 8px;
+        }
+
+        .main-nav li a {
+            padding: 10px 18px;
+            border-radius: 4px;
+            font-weight: 500;
+            color: var(--text-title);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .main-nav li a:hover {
+            background-color: var(--nav-hover);
+        }
+
+        .main-nav li a.active {
+            color: var(--primary);
+        }
+
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            font-size: 26px;
+            color: var(--text-title);
+            cursor: pointer;
+        }
+
+        /* Section General */
+        .section {
+            padding: 80px 0;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .section-title {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            margin: 12px auto 30px;
+            border-radius: 2px;
+        }
+
+        .section-desc {
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            text-align: center;
+            color: var(--text-body);
+            line-height: 1.8;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: calc(100vh - 70px);
+            display: flex;
+            align-items: center;
+            background: linear-gradient(rgba(17, 24, 39, 0.6), rgba(17, 24, 39, 0.6)), 
+            url('https://andersonvisente756-sudo.github.io/360/36.jpg') center/cover no-repeat;
+            color: #fff;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 52px;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 35px;
+            color: #f1f1f1;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .about-img img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .about-text h3 {
+            font-size: 26px;
+            margin-bottom: 18px;
+        }
+
+        .about-text p {
+            margin-bottom: 16px;
+            font-size: 16px;
+        }
+
+        .about-features {
+            margin-top: 25px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .about-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .about-feature i {
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .service-card {
+            background: #fff;
+            padding: 35px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .service-card h3 {
+            margin: 20px 0 15px;
+            font-size: 22px;
+        }
+
+        .service-card .icon {
+            width: 70px;
+            height: 70px;
+            line-height: 70px;
+            border-radius: 50%;
+            background-color: var(--nav-hover);
+            color: var(--primary);
+            font-size: 28px;
+            margin: 0 auto;
+        }
+
+        .service-card .service-desc {
+            font-size: 15px;
+            color: var(--text-body);
+            line-height: 1.7;
+        }
+
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .team-card {
+            text-align: center;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .team-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .team-card .info {
+            padding: 18px;
+        }
+
+        .team-card h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .team-card .position {
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .team-card .bio {
+            font-size: 14px;
+            color: var(--text-body);
+            line-height: 1.6;
+        }
+
+        /* Contact Section */
+        .contact-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .contact-info h3 {
+            font-size: 24px;
+            margin-bottom: 25px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .contact-item .icon {
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background-color: var(--accent-blue);
+            color: #fff;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .contact-hours {
+            margin-top: 30px;
+            background-color: var(--page-normal);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .contact-hours h4 {
+            margin-bottom: 15px;
+            color: var(--text-title);
+        }
+
+        .contact-hours ul li {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .contact-form {
+            background: #f9fafb;
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-title);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 15px;
+            transition: border 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-msg {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+            background-color: #dcfce7;
+            color: #166534;
+            text-align: center;
+        }
+
+        /* Pagination Style */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 60px;
+        }
+
+        .page-btn {
+            min-width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 4px;
+            background-color: var(--page-normal);
+            color: var(--text-title);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .page-btn.active {
+            background-color: var(--primary);
+            color: #fff;
+        }
+
+        .page-nav {
+            background-color: var(--accent-blue);
+            color: #fff;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--text-title);
+            color: #ccc;
+            padding: 40px 0 20px;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-content .logo {
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .copyright {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            font-size: 14px;
+        }
+
+        /* Responsive Mobile */
+        @media (max-width: 992px) {
+            .about-grid,
+            .contact-wrap {
+                grid-template-columns: 1fr;
+            }
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            .main-nav {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--bg-white);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                display: none;
+            }
+            .main-nav.show {
+                display: block;
+            }
+            .main-nav ul {
+                flex-direction: column;
+                padding: 20px;
+            }
+            .main-nav li {
+                margin: 8px 0;
+            }
+            .hero-content h1 {
+                font-size: 36px;
+            }
+            .section-title {
+                font-size: 28px;
+            }
+            .section-desc {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .services-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .section {
+                padding: 50px 0;
+            }
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container nav-wrapper">
+            <a href="#" class="logo">DASAD</a>
+            <div class="menu-toggle" id="menuToggle">☰</div>
+            <nav class="main-nav" id="mainNav">
+                <ul>
+                    <li><a href="#home" class="nav-link active" data-target="home">Home</a></li>
+                    <li><a href="#about" class="nav-link" data-target="about">About Us</a></li>
+                    <li><a href="#services" class="nav-link" data-target="services">Services</a></li>
+                    <li><a href="#team" class="nav-link" data-target="team">Our Team</a></li>
+                    <li><a href="#contact" class="nav-link" data-target="contact">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Home Section -->
+    <section id="home" class="section active">
+        <div class="hero">
+            <div class="container hero-content">
+                <h1>Professional Financial Information Consulting</h1>
+                <p>DASAD delivers reliable, comprehensive and customized financial consulting solutions for global clients. With rich industry experience and professional analysis capabilities, we help you grasp market trends and create stable value.</p>
+                <div class="hero-buttons">
+                    <a href="#services" class="btn btn-primary nav-link" data-target="services">Our Services</a>
+                    <a href="#contact" class="btn btn-accent nav-link" data-target="contact">Get In Touch</a>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div style="margin-top: 60px; text-align: center;">
+                <img src="https://andersonvisente756-sudo.github.io/360/37.jpg" alt="Financial Consulting" style="width: 100%; max-width: 800px; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">About DASAD</h2>
+            <p class="section-desc">Founded in 2010, DASAD has grown from a boutique financial research firm to a leading consulting partner for enterprises and investors worldwide. Our core mission is to demystify complex financial markets and deliver actionable insights that drive sustainable growth.</p>
+            <div class="about-grid">
+                <div class="about-img">
+                    <img src="https://andersonvisente756-sudo.github.io/360/38.jpg" alt="Company Overview">
+                </div>
+                <div class="about-text">
+                    <h3>Your Trusted Financial Partner</h3>
+                    <p>Headquartered in St Albans, England, DASAD specializes in global financial market research, data analysis, risk assessment and strategic consulting. We serve a diverse clientele including multinational corporations, financial institutions, high-net-worth individuals, and emerging startups.</p>
+                    <p>Our team consists of senior financial analysts with average 15+ years of industry experience, certified risk managers, and strategic consultants who have worked with Fortune 500 companies. We adhere to rigorous work standards, combining real-time market data and academic theories to provide objective, data-driven recommendations.</p>
+                    <p>Unlike generic consulting firms, we tailor every solution to your unique business context, risk appetite, and growth objectives. Our transparent pricing model and long-term partnership approach have earned us a 98% client retention rate over the past decade.</p>
+                    
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <i>✓</i>
+                            <span>14+ Years of Industry Expertise</span>
+                        </div>
+                        <div class="about-feature">
+                            <i>✓</i>
+                            <span>Global Market Coverage</span>
+                        </div>
+                        <div class="about-feature">
+                            <i>✓</i>
+                            <span>Customized Solutions</span>
+                        </div>
+                        <div class="about-feature">
+                            <i>✓</i>
+                            <span>Regulatory Compliance Expertise</span>
+                        </div>
+                        <div class="about-feature">
+                            <i>✓</i>
+                            <span>Data-Driven Insights</span>
+                        </div>
+                        <div class="about-feature">
+                            <i>✓</i>
+                            <span>24/7 Client Support</span>
+                        </div>
+                    </div>
+                    
+                    <a href="#contact" class="btn btn-primary nav-link" data-target="contact" style="margin-top: 20px;">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-desc">We offer a comprehensive suite of financial consulting services designed to address every stage of your business or investment lifecycle. From market entry strategy to ongoing risk management, our solutions adapt to your evolving needs.</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="icon">📊</div>
+                    <h3>Market Analysis</h3>
+                    <p class="service-desc">Real-time tracking of global financial markets (equities, fixed income, commodities, forex) with daily and weekly market reports. Our analysis includes trend forecasting, volatility assessment, and correlation studies to identify emerging opportunities and threats.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon">📑</div>
+                    <h3>Financial Consulting</h3>
+                    <p class="service-desc">Tailored financial planning including cash flow management, capital structure optimization, tax-efficient asset allocation, and retirement planning. We work with you to align your financial strategy with your short and long-term goals.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon">🛡️</div>
+                    <h3>Risk Assessment</h3>
+                    <p class="service-desc">Comprehensive risk identification across credit, market, operational, and liquidity dimensions. We develop customized risk mitigation strategies and stress-testing frameworks to protect your assets and ensure business continuity.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon">🔍</div>
+                    <h3>Data Research</h3>
+                    <p class="service-desc">Advanced financial data collection, cleansing, and predictive analytics using AI-powered tools. Our research covers industry benchmarks, competitor analysis, consumer behavior, and regulatory impact assessment.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon">🤝</div>
+                    <h3>Business Consulting</h3>
+                    <p class="service-desc">Strategic guidance for corporate finance decisions including merger & acquisition evaluation, investment project appraisal, capital raising, and corporate governance optimization for SMEs and large enterprises.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon">💡</div>
+                    <h3>Investment Advice</h3>
+                    <p class="service-desc">Objective, conflict-free investment recommendations based on your risk tolerance, time horizon, and financial goals. We provide portfolio rebalancing guidance and performance monitoring across asset classes.</p>
+                </div>
+            </div>
+            <!-- Pagination -->
+            <div class="pagination">
+                <div class="page-btn page-nav">Prev</div>
+                <div class="page-btn active">1</div>
+                <div class="page-btn">2</div>
+                <div class="page-btn">3</div>
+                <div class="page-btn page-nav">Next</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Team Section -->
+    <section id="team" class="section">
+        <div class="container">
+            <h2 class="section-title">Our Professional Team</h2>
+            <p class="section-desc">Our team comprises industry veterans, academic experts, and certified professionals who bring diverse perspectives and deep domain knowledge to every client engagement.</p>
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="https://andersonvisente756-sudo.github.io/360/39.jpg" alt="Michael Brown - Chief Analyst">
+                    <div class="info">
+                        <h4>Michael Brown</h4>
+                        <p class="position">Chief Analyst</p>
+                        <p class="bio">20+ years in financial markets, former senior analyst at Goldman Sachs. Specializes in global equity markets and macroeconomic forecasting. CFA and FRM certified.</p>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <img src="https://andersonvisente756-sudo.github.io/360/40.jpg" alt="Sarah Wilson - Senior Consultant">
+                    <div class="info">
+                        <h4>Sarah Wilson</h4>
+                        <p class="position">Senior Consultant</p>
+                        <p class="bio">Ex-McKinsey financial strategy expert with 15 years of experience in corporate finance and M&A advisory. Specializes in SME growth strategies.</p>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <img src="https://andersonvisente756-sudo.github.io/360/41.jpg" alt="David Clark - Risk Manager">
+                    <div class="info">
+                        <h4>David Clark</h4>
+                        <p class="position">Risk Manager</p>
+                        <p class="bio">Former risk officer at HSBC with expertise in regulatory compliance and enterprise risk management. Holds PRM and ERM certifications.</p>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <img src="https://andersonvisente756-sudo.github.io/360/42.jpg" alt="Emma Lewis - Market Researcher">
+                    <div class="info">
+                        <h4>Emma Lewis</h4>
+                        <p class="position">Market Researcher</p>
+                        <p class="bio">Data analytics specialist with background in financial technology. Expert in AI-driven market prediction models and alternative data analysis.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Pagination -->
+            <div class="pagination">
+                <div class="page-btn page-nav">Prev</div>
+                <div class="page-btn active">1</div>
+                <div class="page-btn">2</div>
+                <div class="page-btn page-nav">Next</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <p class="section-desc">Whether you have a question about our services, need a customized proposal, or want to schedule a consultation with our experts, we're here to help. Reach out to us through any of the channels below.</p>
+            <div class="contact-wrap">
+                <div class="contact-info">
+                    <h3>Get In Touch</h3>
+                    <div class="contact-item">
+                        <div class="icon">📍</div>
+                        <div>
+                            <strong>Address</strong>
+                            <p>74 Abbots Ave W, St Albans, Hertfordshire AL1 5BY, England</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="icon">📞</div>
+                        <div>
+                            <strong>Phone</strong>
+                            <p>+44 7603111966 (Direct Line)</p>
+                            <p>+44 1727 856432 (Office Line)</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="icon">✉️</div>
+                        <div>
+                            <strong>Email</strong>
+                            <p>contact@DASADfinancial.com (General Inquiries)</p>
+                            <p>consult@DASADfinancial.com (Consulting Proposals)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-hours">
+                        <h4>Business Hours</h4>
+                        <ul>
+                            <li>Monday - Friday <span>9:00 AM - 6:00 PM GMT</span></li>
+                            <li>Saturday <span>10:00 AM - 2:00 PM GMT</span></li>
+                            <li>Sunday <span>Closed</span></li>
+                            <li>Public Holidays <span>By Appointment Only</span></li>
+                        </ul>
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <img src="https://andersonvisente756-sudo.github.io/360/43.jpg" alt="Contact" style="width: 100%; border-radius: 8px;">
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Send Message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" name="email" required placeholder="john@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required placeholder="Service Inquiry / Consultation Request">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" name="message" required placeholder="Please provide details about your inquiry, including your business/ investment needs, timeline, and any specific questions you have."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Submit</button>
+                        <div class="submit-msg" id="submitMsg">Submitted successfully! Our team will review your inquiry and respond within 24 business hours.</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <a href="#" class="logo">DASAD</a>
+            <p>Professional Financial Information Consulting Services Since 2010</p>
+            <p>Address: 74 Abbots Ave W, St Albans, Hertfordshire AL1 5BY, England | Phone: +44 7603111966 | Email: contact@DASADfinancial.com</p>
+            <p>Regulated by the Financial Conduct Authority (FCA) | Registration Number: FRN 897654</p>
+            <div class="copyright">
+                &copy; 2026 DASAD Financial Consulting. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('show');
+        });
+
+        // Section Switch & Navigation Active
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+                
+                // Switch Sections
+                sections.forEach(sec => {
+                    sec.classList.remove('active');
+                });
+                document.getElementById(targetId).classList.add('active');
+
+                // Switch Nav Active
+                navLinks.forEach(item => {
+                    item.classList.remove('active');
+                });
+                document.querySelector(`.nav-link[data-target="${targetId}"]`).classList.add('active');
+
+                // Close mobile menu
+                mainNav.classList.remove('show');
+
+                // Scroll to top of section
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Contact Form Submit
+        const contactForm = document.getElementById('contactForm');
+        const submitMsg = document.getElementById('submitMsg');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Show success message no matter input
+            submitMsg.style.display = 'block';
+            // Reset form
+            contactForm.reset();
+            // Hide message after 3s
+            setTimeout(() => {
+                submitMsg.style.display = 'none';
+            }, 3000);
+        });
+
+        // Pagination button style (visual only)
+        const pageBtns = document.querySelectorAll('.page-btn:not(.page-nav)');
+        pageBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                pageBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
